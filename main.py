@@ -42,11 +42,10 @@ def ciselny_generator(k:int)->int:
         
     return int(c)
     
-def kontrola_inputu(uzivatelsky_input2 : str) -> bool:
+def kontrola_delky(uzivatelsky_input2 : str) -> bool:
     """
     Funkce kontrolujici uzivateluv input. 
-    Input musi mit spravnou delku, musi to byt cisla,
-    cifry se nesmi opakovat, cislo nesmi zacinat 0, 
+    Input musi mit spravnou delku. 
     
     :param - str
     
@@ -56,42 +55,86 @@ def kontrola_inputu(uzivatelsky_input2 : str) -> bool:
     if len(uzivatelsky_input2)!=4:
         print("Given number does not have the proper length")
         return False
+    else:
+        return True
     
-    # Kontrola znaku, zda se jedna o cisla
-    for each in uzivatelsky_input2:
-        if each not in ['0','1','2','3','4','5','6','7','8','9']:
-            print("Some signs are not numbers")
-            return False
+def kontrola_znaku(uzivatelsky_input2 : str) -> bool:
+    """
+    Funkce kontrolujici uzivateluv input. 
+    Input musi byt cisla.
+
+    
+    :param - str
+    
+    """    
+        
+    try:
+        int(uzivatelsky_input2)
+        return True
+    except ValueError:
+        print("Some signs are not numbers")
+        return False
+
+
+def kontrola_nuly(uzivatelsky_input2 : str) -> bool:
+    """
+    Funkce kontrolujici uzivateluv input. 
+    Input nesmi zacinat 0.
+    
+    :param - str
+    
+    """ 
         
     # Kontrola, zda ci­slo nezacina 0
     if uzivatelsky_input2[0]=="0":
         print("Number cannot start with 0")
         return False
+    else:
+        return True
+
+def kontrola_duplicit(uzivatelsky_input2 : str) -> bool:
+    """
+    Funkce kontrolujici uzivateluv input. 
+    Cifry se nesmi opakovat.
     
+    :param - str
+    
+    """     
     # Kontrola Duplicitni­ch Hodnot
     helper_list2=[]
     for each in uzivatelsky_input2:
         if each in helper_list2:
-            print("Duplicitni­ hodnoty nejsou dovoleny")
+            print("Duplicit digits are not allowed.")
             return False
+            break
+
         else:
             helper_list2.append(each)
     else:
         return True
 
-vygenerovane_cislo=ciselny_generator(4)
-vygenerovane_cislo_list=[eeach for eeach in str(vygenerovane_cislo)]
 
-# Cyklus While, ktera bezi tak dlouho, dokud nedojde k uhodnuti spravneho cisla.
+vygenerovane_cislo=ciselny_generator(4) # Vygeneruje 4-ciferne cislo
+# Nyni z vygenerovaneho cisla vytvari list, kazda cifra je prvek.
+vygenerovane_cislo_list=[eeach for eeach in str(vygenerovane_cislo)] 
+
+# Cyklus While, ktery bezi tak dlouho, dokud nedojde k uhodnuti spravneho cisla.
 h=True
 pocet_cyklu=0
 while h:
     pocet_cyklu += 1
-    # Cyklus While not, ktery kontroluje spravnost uzivatelova inputu.
-    zkontrolovana_hodnota=False
-    while not zkontrolovana_hodnota:
+    
+    # Cyklus While not, ktery kontroluje spravnost uzivatelova inputu pomoci funkci.
+    zkontrolovana_hodnota1=False
+    zkontrolovana_hodnota2=False
+    zkontrolovana_hodnota3=False
+    zkontrolovana_hodnota4=False
+    while not zkontrolovana_hodnota1 or not zkontrolovana_hodnota2 or not zkontrolovana_hodnota3 or not zkontrolovana_hodnota4:
         uzivatelsky_input=input("Enter a number: ")
-        zkontrolovana_hodnota=kontrola_inputu(uzivatelsky_input)
+        zkontrolovana_hodnota1=kontrola_delky(uzivatelsky_input)
+        zkontrolovana_hodnota2=kontrola_znaku(uzivatelsky_input)
+        zkontrolovana_hodnota3=kontrola_nuly(uzivatelsky_input)
+        zkontrolovana_hodnota4=kontrola_duplicit(uzivatelsky_input)
             
     if int(uzivatelsky_input)==vygenerovane_cislo:
         print("Correct, you've guessed the right number on the ",pocet_cyklu," try.")
@@ -111,6 +154,7 @@ while h:
 
         if z!=u and z in vygenerovane_cislo_list:
             cow_count += 1
+    
     if bull_count==1:
         print(bull_count," Bull")
     else:
