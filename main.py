@@ -33,7 +33,6 @@ def ciselny_generator(k:int)->str:
         pomocny_list = sample(range(0,10),k)
     
     vygenerovane_cislo = ''.join(map(str, pomocny_list))
-    print(vygenerovane_cislo)
     return vygenerovane_cislo
 
 def kontrola_inputu(uzivatelsky_input2 : str) -> bool:
